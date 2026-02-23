@@ -1,37 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scholarship</title>
-</head>
-<body>
-    <h1>Scholarship Form</h1>
-    <hr>
-    <p>Scholarship is a financial aid provided to students to support their education. It can be awarded based on various criteria such as academic achievement, financial need, or specific talents. Scholarships can help cover tuition fees, books, and other educational expenses, making it easier for students to pursue their studies without the burden of financial stress.<br><br>    
-    NAME: <input type="text" name="name"><br><br>
-    EMAIL: <input type="email" name="email"><br><br>
-    PHONE: <input type="tel" name="phone"><br><br>
-    DATE OF BIRTH: <input type="date" name="dob"><br><br>
-    GENDER: <input type="radio" name="gender" value="male"> Male
-            <input type="radio" name="gender" value="female"> Female
-            <input type="radio" name="gender" value="other"> Other<br><br>
-    </p>
-    
- <style>
-        body {
-            background-color: lightblue;
-        }
-        h1 {
-            color: navy;
-            text-align: center;
-        }
-        p {
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            color: darkblue;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V. Rashika | AI & Data Science</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#ffffff;
+    overflow-x:hidden;
+}
+
+/* Neural Network Canvas */
+#network{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+}
+
+/* Navbar */
+nav{
+    position:fixed;
+    width:100%;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+    z-index:1000;
+}
+
+nav h2{
+    color:#00f7ff;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:25px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:#ffffff;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#00f7ff;
+}
+
+/* Hero */
+header{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 20px;
+}
+
+header h1{
+    font-size:3rem;
+}
+
+header span{
+    color:#00f7ff;
+}
+
+header p{
+    margin-top:15px;
+    font-size:1.2rem;
+    color:#dcdcdc;
+}
+
+.btn{
+    margin-top:25px;
+    padding:12px 28px;
+    border:2px solid #00f7ff;
+    background:transparent;
+    color:#00f7ff;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#00f7ff;
+    color:#000;
+    box-shadow:0 0 20px #00f7ff;
+}
+
+/* Sections */
+section{
+    padding:100px 8%;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:50px;
+    color:#00f7ff;
+    font-size:2rem;
+}
+
+/* Cards */
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:15px;
+    margin-bottom:25px;
+    border:1px solid rgba(0,247,255,0.2);
+    transition:all 0.4s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(0,247,255,0.2),transparent);
+    transition:0.6s;
+}
+
+.card:hover::before{
+    left:100%;
+}
+
+.card:hover{
+    transform:translateY(-12px) scale(1.03);
+    box-shadow:0 20px 50px rgba(0,247,255,0.4);
+    border-color:#00f7ff;
+}
+
+/* Grid */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+/* Contact Center */
+#contact .card{
+    max-width:500px;
+    margin:0 auto;
+    text-align:center;
+}
+
+/* Links */
+a{
+    color:#00f7ff;
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:25px;
+    background:#000;
+    border-top:1px solid #333;
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    nav{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+        font-size:14px;
+    }
+
+    header h1{
+        font-size:2.2rem;
+    }
+
+    section{
+        padding:80px 6%;
+    }
+}
 </style>
+</head>
+
+<body>
+
+<canvas id="network"></canvas>
+
+<nav>
+    <h2>Rashika</h2>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<header>
+    <h1>Hi, I'm <span>V. Rashika</span></h1>
+    <p>Artificial Intelligence & Data Science Student | Aspiring Python Developer | Data Analyst</p>
+    <a href="#about"><button class="btn">Explore Portfolio</button></a>
+</header>
+
+<section id="about">
+<h2>ABOUT ME</h2>
+<div class="card">
+<p>
+I am a pre-final year Artificial Intelligence and Data Science student with a strong aspiration to build a career as a Python Developer and Data Analyst. 
+I possess hands-on experience in programming and database management, along with a solid foundation in data-driven problem solving.
+<br><br>
+I am passionate about leveraging AI and analytics to develop efficient, scalable, and impactful solutions. 
+With a continuous learning mindset and strong analytical skills, I aim to contribute effectively to innovative technology-driven organizations.
+</p>
+</div>
+</section>
+
+<section id="education">
+<h2>EDUCATION</h2>
+<div class="card">
+<h3>Achariya College of Engineering Technology</h3>
+<p>Bachelor of Technology in Artificial Intelligence and Data Science</p>
+<p>CGPA: 9.0 | 2023 - 2027</p>
+</div>
+<div class="card">
+<h3>Kolping Matriculation Hr. Sec. School</h3>
+<p>Completed Higher Secondary Schooling</p>
+<p>Passed Out Year: 2023</p>
+</div>
+</section>
+
+<section id="skills">
+<h2>SKILLS</h2>
+<div class="grid">
+<div class="card">Artificial Intelligence</div>
+<div class="card">Data Science</div>
+<div class="card">Machine Learning</div>
+<div class="card">Data Analysis</div>
+<div class="card">Prompt Engineering</div>
+<div class="card">Web Development</div>
+<div class="card">Robotic Process Automation</div>
+<div class="card">Vibe Coding</div>
+</div>
+</section>
+
+<section>
+<h2>TOOLS</h2>
+<div class="grid">
+<div class="card">Excel</div>
+<div class="card">Python</div>
+<div class="card">MySQL</div>
+<div class="card">HTML</div>
+<div class="card">CSS</div>
+<div class="card">Cursor.ai</div>
+<div class="card">Lovable</div>
+<div class="card">RPA in UiPath</div>
+<div class="card">Git and GitHub</div>
+<div class="card">Arduino IDE</div>
+</div>
+</section>
+
+<section id="experience">
+<h2>WORK EXPERIENCE</h2>
+<div class="card">
+<h3>Hybrid Intern at Ignite Lab Pvt. Ltd, Puducherry</h3>
+<p>Role: Web Developer</p>
+<p>Duration: May 2024 - Aug 2025</p>
+</div>
+<div class="card">
+<h3>Virtual Intern at RD Infro Technologies</h3>
+<p>Role: Data Analyst</p>
+<p>Duration: July 2025</p>
+</div>
+</section>
+
+<section id="projects">
+<h2>PROJECTS</h2>
+<div class="card">
+<h3>Wireless Charging of Electric Vehicles</h3>
+<p>Domain: Electric Vehicles (EV) Technology</p>
+</div>
+<div class="card">
+<h3>AI Talking Tommy</h3>
+<p>Domain: Artificial Intelligence & Conversational Systems</p>
+</div>
+</section>
+
+<section id="contact">
+<h2>CONTACT</h2>
+<div class="card">
+<p><strong>Location:</strong> Puducherry</p>
+<p><strong>Phone:</strong> 9943873106</p>
+<p><strong>Email:</strong> <a href="mailto:vrashika71@gmail.com">vrashika71@gmail.com</a></p>
+<p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/rashika-v-452b2b2b7/recent-activity/all/" target="_blank">View Profile</a></p>
+<p><strong>GitHub:</strong> <a href="https://github.com/Rashika1105" target="_blank">View GitHub</a></p>
+</div>
+</section>
+
+<footer>
+© 2026 V. Rashika | Portfolio Website. All rights reserved.
+</footer>
+
 </body>
 </html>
+just make the title about me, contact, tools ,skills, projects, work experience, education in capital alphabets
